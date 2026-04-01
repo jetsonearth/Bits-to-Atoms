@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
-import { ReactNode } from "react";
+import { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { Locale } from "@/lib/i18n";
 
 function Table({ children }: { children: ReactNode }) {
   return (
@@ -9,8 +10,22 @@ function Table({ children }: { children: ReactNode }) {
   );
 }
 
-export const mdxComponents: MDXComponents = {
-  table: Table as unknown as MDXComponents["table"],
-  // Headings get IDs from rehype-slug, no custom override needed
-  // Code blocks get highlighting from rehype-pretty-code
-};
+function H2En(props: ComponentPropsWithoutRef<"h2">) {
+  return (
+    <h2
+      {...props}
+      style={{
+        ...props.style,
+        fontFamily: 'var(--font-instrument-serif), "Instrument Serif", serif',
+        fontWeight: 400,
+      }}
+    />
+  );
+}
+
+export function getMDXComponents(locale: Locale): MDXComponents {
+  return {
+    table: Table as unknown as MDXComponents["table"],
+    ...(locale === "en" ? { h2: H2En as MDXComponents["h2"] } : {}),
+  };
+}

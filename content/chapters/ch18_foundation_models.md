@@ -20,6 +20,11 @@
 
 这三步的核心思路是一样的：用 Transformer 架构统一不同模态的信息。LLM 把文字变成 token 序列来处理，VLM 加上了图像 token，VLA 则把机器人的动作也编码成 token - 关节角度、末端执行器位置这些连续值被离散化成一串“动作 token”，和文字 token、图像 token 一起丢进同一个模型训练。
 
+<figure>
+  <img src="/images/ch18/rt2_architecture.png" alt="RT-2 架构：将互联网视觉问答数据和机器人动作数据共同微调到同一个 VLA 模型中" />
+  <figcaption>RT-2 的核心思路 — 将互联网视觉问答数据与机器人动作数据共同微调，让同一个模型既能"看图说话"又能"输出动作"。图源：Google DeepMind</figcaption>
+</figure>
+
 这个思路最早被 Google DeepMind 的 **RT-2** 在 2023 年验证。RT-2 直接在 PaLI-X 这样的大规模 VLM 上做 fine-tune，把机器人的动作表示成文本 token（比如 “1 128 91 241 5 101 127”），让模型像“说话”一样“输出动作”。结果很惊人：模型不仅能执行训练数据里见过的任务，还展现了一定的泛化能力 - 比如面对一个从没见过的物体，它能根据语言指令“把最小的物体移到旁边”来正确操作。
 
 ---
@@ -30,9 +35,25 @@
 
 **Google DeepMind RT 系列**。RT-2 是先驱，证明了 VLA 路线可行。后续的 **RT-H**（Robot Transformer with Hierarchies）引入了动作层级 - 不是直接从语言指令跳到关节角度，而是先预测中间层的“语言动作”（比如“向前移动手臂”、“向右旋转”），再从这些语言动作预测低层动作。这种层级结构在多任务学习场景下效果明显更好，比 RT-2 提升了 15% 的成功率。
 
+<figure>
+  <img src="/images/ch18/groot_n1.jpg" alt="NVIDIA GR00T 生态系统：Foundation Models + 仿真 + 数据管线 + Jetson Thor 计算平台" />
+  <figcaption>NVIDIA GR00T 生态系统 — Foundation Models、仿真数据生成、Isaac Lab 训练、Jetson Thor 计算平台，构成完整的人形机器人 AI 栈。图源：NVIDIA</figcaption>
+</figure>
+
 **NVIDIA GR00T N1 系列**。NVIDIA 在 2025 年 3 月发布了 GR00T N1，定位为“第一个开放的人形机器人基础模型”。它的架构是双系统设计：一个快速的 action model 负责实时控制和动作生成（跑在机器人本体上），一个慢速的 VLM 负责场景理解和任务规划。到 N1.5 版本，在 DreamGen 仿真基准上的成功率从 13.1% 提升到 38.3%。最新的 **N1.6**（2026 年 CES 发布）进一步优化了架构和数据管线。NVIDIA 的策略很明确：做机器人 AI 的“Android” - 模型开源，但你得用它的 Isaac 仿真平台来训练和部署。
 
 **银河通用（Galbot）GraspVLA / GroceryVLA**。这是一个很有意思的案例。GraspVLA 是第一个专门针对抓取任务的 VLA 基础模型，训练数据来自 SynGrasp-1B - 一个十亿帧级别的仿真合成数据集。它能做到零样本抓取：给一个从没见过的物体，不需要额外训练就能成功抓起来。在此基础上，**GroceryVLA** 针对零售场景做了特化 - 在 2025 年 WAIC 上展示了能处理数百种不同商品的自主上货能力。这说明 VLA 的一个现实落地路径可能不是“通用万能”，而是在垂直场景里先打透。
+
+<figure>
+  <img src="/images/ch18/pi0_robots.png" alt="pi-0 训练所用的 7 种机器人形态：双臂 UR5e、双臂 Trossen、双臂 ARX、单臂 UR5e、Franka、移动 Trossen、移动 Fibocom" />
+  <figcaption>pi-0 的训练横跨 7 种不同的机器人形态 — 同一个 30 亿参数的 VLA 模型控制从桌面双臂到移动操作平台的所有机器人。图源：Physical Intelligence</figcaption>
+</figure>
+
+**Physical Intelligence（Pi）pi-0 系列**。由 Google Brain 的 Karol Hausman、UC Berkeley 的 Sergey Levine、Stanford 的 Chelsea Finn 联合创立。**pi-0** 是一个 30 亿参数的 VLA，用 flow matching 生成连续动作轨迹，推理频率 50Hz，训练数据跨越 7 种机器人形态和 68 个任务。后续的 **pi-0.5** 引入层级架构（先预测文本子任务，再预测底层动作），**pi-0.6** 把 RL 引入 VLA 微调，吞吐量翻倍。代码和权重完全开源（openpi 仓库），是目前社区复现和扩展最多的 VLA 基线。
+
+**Skild AI - "一个大脑控制所有身体"**。由 CMU 的 Deepak Pathak 和 Abhinav Gupta 创立。他们不针对特定机器人形态训练模型，而是做 **omni-bodied（全形态通用）** 的基础模型 - Skild Brain。同一个模型控制四足、人形、机械臂、移动平台，不需要针对具体机器人做适配。估值 140 亿美元，是赛道里估值最高的纯玩家。不过"一个模型控制所有机器人"的愿景到底能兑现多少，行业里还有不少怀疑的声音。
+
+**General Intuition - 从游戏视频里学空间推理**。脱胎于 Medal（一个有 20 亿条游戏剪辑的平台），核心思路是：第一人称游戏视频天然包含丰富的空间-时间推理信息，训练 AI agent 学习这些规律，然后迁移到机器人和无人机上。这是 **world model（世界模型）** 路线的一个变体 - 不从真实机器人数据学，而是从游戏交互数据学物理直觉。据说 OpenAI 也在花巨资购买游戏数据做类似的事。关键挑战是 game-to-real 的迁移鸿沟能不能跨过去。
 
 **宇树（Unitree）UnifoLM 系列**。宇树在 2025-2026 年发布了两个模型：**UnifoLM-WMA-0** 是一个 World Model - Action 架构，核心是一个世界模型，既能当仿真器生成合成数据，又能通过预测未来交互来优化决策。**UnifoLM-VLA-0**（2026 年 1 月发布）在 LIBERO 仿真基准上拿到了 98.7 分 - VLA 类别最高分，超过了 OpenVLA、InternVLA 和 Physical Intelligence 的 pi-0 系列。两个模型都已开源，这对于一家硬件厂商来说是个大胆的策略。
 
@@ -66,7 +87,7 @@
 
 **ROS 2 Bridge MCP Server**。一个更通用的方案，把 ROS 2 的 service 和 topic 直接暴露为 MCP 工具和资源。这意味着任何 MCP 兼容的 AI 工具（Claude、GPT 等）都能直接和 ROS 2 机器人对话，做到发布运动指令、读取传感器数据、触发导航任务。
 
-**DimOS 的 MCP 集成**。DimOS 内置了 MCP server，把机器人的核心能力 - 导航、检测、移动、视觉伺服等 - 封装成标准的 MCP 工具。这样任何 MCP 兼容的 AI agent 都能直接调用这些技能，不需要自己去对接底层的 ROS 2 话题和服务。它本质上是在 LLM 和机器人硬件之间加了一层标准化的抽象。
+**Dimensional OS（DimOS）的 MCP 集成**。DimOS 是一个 Python-first 的机器人智能体操作系统，底层构建在 ROS 2 之上，但它把 LLM/VLM 作为一等公民集成进来。它内置了 MCP server，把机器人的核心能力 - 导航、检测、移动、视觉伺服等 - 封装成标准的 MCP 工具。这意味着你可以在终端里用自然语言"vibecode"一台机器人 - 输入"探索这个房间"，DimOS 会协调 LLM 规划、ROS 2 导航和传感器数据流来执行。它支持多种形态的机器人（宇树 Go2 四足、AgileX 机械臂、MAVLink 无人机等），是目前把 foundation model 和 ROS 2 机器人连接起来最完整的开源框架之一。它本质上是在 LLM 和机器人硬件之间加了一层标准化的抽象 - 如果说 ROS 2 是机器人的"操作系统"，DimOS 想做的是机器人的"AI 原生操作系统"。
 
 MCP 在机器人上的意义远不止“方便调用”。更深层的价值是**可组合性** - 你可以把不同来源的技能（Nav2 的导航、MoveIt 的操作、自定义的感知流水线）统一暴露给 LLM，让 LLM 根据任务需要自由组合。这比硬编码一棵行为树灵活得多，虽然目前在可靠性上还不能完全替代行为树。
 

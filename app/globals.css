@@ -93,14 +93,6 @@ body {
   letter-spacing: normal;
 }
 
-.chapter-content--en h2,
-.chapter-content--en h3,
-.chapter-content--en h4 {
-  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
 .chapter-content h2,
 .chapter-content h3,
 .chapter-content h4 {
@@ -121,6 +113,12 @@ body {
 
 .chapter-content h2:first-child {
   margin-top: 0;
+}
+
+.chapter-content.chapter-content--en h2 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .chapter-content h3 {

@@ -2,9 +2,10 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
-import { mdxComponents } from "@/components/mdx/MDXComponents";
+import { getMDXComponents } from "@/components/mdx/MDXComponents";
+import type { Locale } from "./i18n";
 
-export async function renderMarkdown(source: string) {
+export async function renderMarkdown(source: string, locale: Locale = "zh") {
   const { content } = await compileMDX({
     source,
     options: {
@@ -25,7 +26,7 @@ export async function renderMarkdown(source: string) {
         ],
       },
     },
-    components: mdxComponents,
+    components: getMDXComponents(locale),
   });
 
   return content;

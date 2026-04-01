@@ -1,4 +1,4 @@
-## ROS 2 — The Linux of the Robot World
+## ROS 2: The Operating System of the Robot World
 
 The first five chapters took us from sensors to actuators to compute platforms — we've basically laid out the robot's "body." Sensors are its eyes and ears, actuators are its muscles and joints, and Jetson is the physical hardware that houses its brain.
 

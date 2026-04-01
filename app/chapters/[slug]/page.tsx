@@ -61,7 +61,7 @@ export default async function ChapterPage({
   const chapter = allChapters.find((c) => c.slug === slug)!;
   const part = getPartForChapter(chapter.number)!;
   const partStrings = s.parts[part.number - 1];
-  const renderedContent = await renderMarkdown(rawContent);
+  const renderedContent = await renderMarkdown(rawContent, locale);
 
   return (
     <ChapterLayout slug={slug}>
