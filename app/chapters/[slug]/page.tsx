@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import {
   getChapterContent,
   getChapterTitle,
-  extractTOCHeadings,
   getAllChapterSlugs,
 } from "@/lib/chapters";
 import { renderMarkdown } from "@/lib/markdown";
@@ -47,7 +46,6 @@ export default async function ChapterPage({
   }
 
   const rawContent = getChapterContent(slug);
-  const headings = extractTOCHeadings(rawContent);
   const chapter = allChapters.find((c) => c.slug === slug)!;
   const part = getPartForChapter(chapter.number)!;
   const renderedContent = await renderMarkdown(rawContent);
@@ -78,7 +76,7 @@ export default async function ChapterPage({
         </article>
 
         {/* Right-rail TOC */}
-        <PageTOC headings={headings} />
+        <PageTOC />
       </div>
     </ChapterLayout>
   );
