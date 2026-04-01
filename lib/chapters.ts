@@ -1,10 +1,18 @@
 import fs from "fs";
 import path from "path";
 import { allChapters } from "@/content/book";
+import type { Locale } from "./i18n";
 
 const chaptersDir = path.join(process.cwd(), "content", "chapters");
 
-export function getChapterContent(slug: string): string {
+export function getChapterContent(slug: string, locale: Locale = "zh"): string {
+  if (locale === "en") {
+    const enPath = path.join(chaptersDir, `${slug}.en.md`);
+    if (fs.existsSync(enPath)) {
+      return fs.readFileSync(enPath, "utf-8");
+    }
+  }
+  // Fallback to Chinese
   const filePath = path.join(chaptersDir, `${slug}.md`);
   return fs.readFileSync(filePath, "utf-8");
 }

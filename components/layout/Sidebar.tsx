@@ -1,65 +1,61 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { parts, type Part } from "@/content/book";
+import { useLocale } from "@/components/LocaleProvider";
+import { t } from "@/lib/i18n";
 
 function PartSection({
   part,
   activeSlug,
-  defaultOpen,
 }: {
   part: Part;
   activeSlug: string;
-  defaultOpen: boolean;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  const { locale } = useLocale();
+  const s = t(locale);
+  const hasActive = part.chapters.some((c) => c.slug === activeSlug);
+  const partStrings = s.parts[part.number - 1];
 
   return (
-    <div className="mb-2">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-2 py-1.5 text-sm text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
-      >
-        <svg
-          className={`w-3 h-3 transition-transform duration-200 ${open ? "rotate-90" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-        <span className="font-mono text-[10px] opacity-50">
+    <div className="relative mt-7 first:mt-0">
+      {/* Part label */}
+      <p className="text-xs font-medium text-[var(--text-tertiary)] mb-3">
+        <span className="font-mono text-[10px] opacity-40 mr-1.5">
           {String(part.number).padStart(2, "0")}
         </span>
-        <span className="font-medium text-[var(--text-secondary)]">
-          {part.title}
-        </span>
-      </button>
-      {open && (
-        <div className="ml-3 mt-0.5 space-y-px">
-          {part.chapters.map((ch) => {
-            const isActive = ch.slug === activeSlug;
-            return (
-              <Link
-                key={ch.slug}
-                href={`/chapters/${ch.slug}`}
-                className={`flex items-center gap-2 px-2 py-1.5 text-[13px] rounded transition-colors ${
-                  isActive
-                    ? "text-[var(--text-primary)] font-medium bg-[var(--bg-tertiary)]"
-                    : "text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
-                }`}
-              >
-                <span className="font-mono text-[10px] w-4 shrink-0 opacity-40">
-                  {String(ch.number).padStart(2, "0")}
-                </span>
-                {ch.fileTitle}
-              </Link>
-            );
-          })}
-        </div>
-      )}
+        {partStrings.title}
+      </p>
+
+      {/* Chapter links with left indicator rail */}
+      <div className="relative">
+        {/* Rail line - only show for active part */}
+        {hasActive && (
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-[var(--border-primary)]" />
+        )}
+
+        {part.chapters.map((ch) => {
+          const isActive = ch.slug === activeSlug;
+          const chapterTitle = s.chapterTitles[ch.number - 1] ?? ch.fileTitle;
+          return (
+            <Link
+              key={ch.slug}
+              href={`/chapters/${ch.slug}`}
+              className={`relative block pl-4 py-[5px] text-[13px] leading-snug transition-colors ${
+                isActive
+                  ? "text-[var(--text-primary)] font-medium"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              }`}
+            >
+              {/* Active indicator dot */}
+              {isActive && (
+                <span className="absolute left-[-2.5px] top-1/2 -translate-y-1/2 w-[5px] h-[5px] rounded-full bg-[var(--text-primary)]" />
+              )}
+              {chapterTitle}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -73,8 +69,8 @@ export function Sidebar({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const activePartNumber =
-    parts.find((p) => p.chapters.some((c) => c.slug === activeSlug))?.number ?? 1;
+  const { locale } = useLocale();
+  const s = t(locale);
 
   return (
     <>
@@ -92,29 +88,25 @@ export function Sidebar({
         }`}
       >
         {/* Header */}
-        <div className="px-5 pt-6 pb-4">
+        <div className="px-6 pt-7 pb-5">
           <Link
             href="/"
-            className="text-sm font-semibold text-[var(--text-primary)] hover:opacity-70 transition-opacity"
+            className="block text-base font-semibold text-[var(--text-primary)] hover:opacity-70 transition-opacity leading-tight"
           >
-            从代码到现实世界
+            {s.bookTitle}
           </Link>
-          <p className="text-[11px] text-[var(--text-tertiary)] mt-0.5">
-            AI 开发者的机器人全栈指南
+          <p className="text-[11px] text-[var(--text-tertiary)] mt-1.5 leading-relaxed">
+            {s.bookSubtitle}
           </p>
         </div>
 
-        {/* Subtle divider */}
-        <div className="mx-5 mb-4 border-t border-[var(--border-secondary)]" />
-
         {/* Navigation */}
-        <nav className="px-5 pb-8">
+        <nav className="px-6 pb-10">
           {parts.map((part) => (
             <PartSection
               key={part.number}
               part={part}
               activeSlug={activeSlug}
-              defaultOpen={part.number === activePartNumber}
             />
           ))}
         </nav>

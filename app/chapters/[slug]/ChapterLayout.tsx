@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { useLocale } from "@/components/LocaleProvider";
+import { t } from "@/lib/i18n";
 
 function MenuIcon() {
   return (
@@ -29,6 +31,8 @@ export function ChapterLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { locale } = useLocale();
+  const s = t(locale);
 
   return (
     <div className="flex min-h-screen">
@@ -46,7 +50,7 @@ export function ChapterLayout({
             className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
           >
             <MenuIcon />
-            <span>目录</span>
+            <span>{s.toc}</span>
           </button>
         </div>
 

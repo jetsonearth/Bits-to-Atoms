@@ -2,16 +2,16 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --bg-primary: #f8f8f7;
-  --bg-secondary: #f2f1ef;
-  --bg-content: #f8f8f7;
-  --bg-tertiary: #eceae7;
+  --bg-primary: #dbd6cc;
+  --bg-secondary: #d4cfc5;
+  --bg-content: #dbd6cc;
+  --bg-tertiary: #cdc8be;
   --text-primary: #171717;
   --text-secondary: #404040;
   --text-tertiary: #8a8a8a;
-  --accent: #e4b94e;
-  --accent-hover: #c9982e;
-  --accent-subtle: #fdf8ed;
+  --accent: #171717;
+  --accent-hover: #404040;
+  --accent-subtle: #f0f0f0;
   --border-primary: #e5e5e5;
   --border-secondary: #f0f0f0;
 }
@@ -20,15 +20,15 @@
   --bg-primary: #141412;
   --bg-secondary: #121210;
   --bg-content: #161614;
-  --bg-tertiary: #1e1e1c;
+  --bg-tertiary: #242422;
   --text-primary: #e8e6e1;
   --text-secondary: #b0ada5;
   --text-tertiary: #6b6862;
-  --accent: #e4b94e;
-  --accent-hover: #f0ca6a;
-  --accent-subtle: #2a2518;
-  --border-primary: #222220;
-  --border-secondary: #1c1c1a;
+  --accent: #e8e6e1;
+  --accent-hover: #b0ada5;
+  --accent-subtle: #1e1e1c;
+  --border-primary: #2e2e2b;
+  --border-secondary: #242422;
 }
 
 body {
@@ -134,10 +134,16 @@ body {
   color: var(--accent-hover);
 }
 
-.chapter-content ul,
+.chapter-content ul {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
 .chapter-content ol {
   margin-bottom: 1.25rem;
   padding-left: 1.5rem;
+  list-style-type: decimal;
 }
 
 .chapter-content li {
@@ -167,10 +173,20 @@ body {
   display: inline;
 }
 
-/* Term highlight - strong inside paragraphs gets a subtle underline */
+/* Term highlight - strong text stands out */
 .chapter-content p > strong {
+  color: var(--text-primary);
   background: linear-gradient(to top, var(--accent-subtle) 40%, transparent 40%);
   padding: 0 1px;
+}
+
+.dark .chapter-content p > strong {
+  color: #ffffff;
+  background: linear-gradient(to top, rgba(255,255,255,0.15) 40%, transparent 40%);
+}
+
+.dark .chapter-content strong {
+  color: #ffffff;
 }
 
 /* Inline code */
@@ -183,8 +199,17 @@ body {
   padding: 0.125em 0.35em;
 }
 
+/* Dual-theme syntax highlighting (rehype-pretty-code + shiki) */
+code[data-theme*=" "] span {
+  color: var(--shiki-light) !important;
+}
+.dark code[data-theme*=" "] span {
+  color: var(--shiki-dark) !important;
+}
+
 /* Code blocks */
 .chapter-content pre {
+  text-align: left;
   font-family: var(--font-geist-mono), "Geist Mono", "SF Mono", Menlo, monospace;
   font-size: 14px;
   line-height: 1.6;
@@ -241,6 +266,29 @@ body {
 }
 
 /* Horizontal rules - three dots */
+.chapter-content figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.chapter-content figure img {
+  max-width: 100%;
+  max-height: 500px !important;
+  height: auto;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  display: block !important;
+  border-radius: 8px;
+  border: 1px solid var(--border-primary);
+}
+
+.chapter-content figure figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
 .chapter-content hr {
   border: none;
   margin: 3rem 0;

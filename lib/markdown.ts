@@ -15,7 +15,10 @@ export async function renderMarkdown(source: string) {
           [
             rehypePrettyCode,
             {
-              theme: "github-light",
+              theme: {
+                light: "github-light",
+                dark: "github-dark",
+              },
               keepBackground: false,
             },
           ],

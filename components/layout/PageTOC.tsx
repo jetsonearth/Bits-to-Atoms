@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale } from "@/components/LocaleProvider";
+import { t } from "@/lib/i18n";
 
 interface DOMHeading {
   id: string;
@@ -11,6 +13,8 @@ interface DOMHeading {
 export function PageTOC() {
   const [headings, setHeadings] = useState<DOMHeading[]>([]);
   const [activeId, setActiveId] = useState("");
+  const { locale } = useLocale();
+  const s = t(locale);
 
   useEffect(() => {
     // Discover headings from the actual DOM (rehype-slug generated IDs)
@@ -56,15 +60,15 @@ export function PageTOC() {
   return (
     <nav className="hidden xl:block w-52 shrink-0 ml-12">
       <div className="sticky top-8">
-        <p className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-widest mb-4">
-          On this page
+        <p className="text-[12px] font-semibold text-[var(--text-tertiary)] uppercase tracking-widest mb-4">
+          {s.onThisPage}
         </p>
         <ul className="space-y-2.5">
           {headings.map((h) => (
             <li key={h.id}>
               <a
                 href={`#${h.id}`}
-                className={`block text-[13px] leading-snug transition-colors ${
+                className={`block text-[14px] leading-snug transition-colors ${
                   h.level === 3 ? "pl-3" : ""
                 } ${
                   activeId === h.id

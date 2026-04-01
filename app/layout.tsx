@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { inter, notoSerifSC, geistMono } from "@/lib/fonts";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { LanguageToggle } from "@/components/layout/LanguageToggle";
+import { LocaleProvider } from "@/components/LocaleProvider";
+import { getServerLocale } from "@/lib/locale-server";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,14 +16,16 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://robotics-guide.vercel.app"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getServerLocale();
+
   return (
     <html
-      lang="zh-CN"
+      lang={locale === "en" ? "en" : "zh-CN"}
       className={`${inter.variable} ${notoSerifSC.variable} ${geistMono.variable} h-full`}
       suppressHydrationWarning
     >
@@ -33,8 +38,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-full bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased transition-colors duration-300">
         <div className="paper-texture" aria-hidden="true" />
-        <div className="relative z-[1]">{children}</div>
-        <ThemeToggle />
+        <LocaleProvider initial={locale}>
+          <div className="relative z-[1]">{children}</div>
+          <LanguageToggle />
+          <ThemeToggle />
+        </LocaleProvider>
       </body>
     </html>
   );
