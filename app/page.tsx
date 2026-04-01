@@ -10,8 +10,8 @@ import {
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero — full viewport, centered */}
-      <header className="noise-bg min-h-[85vh] flex flex-col items-center justify-center px-6 pb-16">
+      {/* Hero */}
+      <header className="noise-bg flex flex-col items-center justify-center px-6 pt-32 pb-20">
         <div className="max-w-2xl text-center">
           <h1
             className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight mb-5 leading-[1.15]"
@@ -43,25 +43,10 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Scroll hint */}
-        <div className="mt-auto pt-12 text-[var(--text-tertiary)]">
-          <p className="text-xs tracking-widest uppercase mb-2">
-            {allChapters.length} 章 &middot; {parts.length} 部分
-          </p>
-          <svg
-            className="w-4 h-4 mx-auto animate-bounce"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </div>
+        {/* Chapter count, below CTA */}
+        <p className="mt-10 text-xs text-[var(--text-tertiary)] tracking-wider">
+          {allChapters.length} 章 &middot; {parts.length} 部分
+        </p>
       </header>
 
       {/* TOC — flat list with part groupings */}
