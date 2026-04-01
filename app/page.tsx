@@ -36,7 +36,7 @@ export default function Home() {
           </p>
           <Link
             href="/chapters/ch01_what_is_a_robot"
-            className="inline-flex items-center gap-2 bg-[var(--text-primary)] text-[var(--bg-primary)] px-7 py-3 rounded-lg text-sm font-medium hover:bg-neutral-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-[var(--text-primary)] text-[var(--bg-primary)] px-7 py-3 rounded-lg text-sm font-medium hover:opacity-80 transition-all"
           >
             开始阅读
             <span>&rarr;</span>

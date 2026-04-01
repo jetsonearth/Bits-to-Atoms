@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { inter, notoSerifSC, geistMono } from "@/lib/fonts";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,10 +22,19 @@ export default function RootLayout({
     <html
       lang="zh-CN"
       className={`${inter.variable} ${notoSerifSC.variable} ${geistMono.variable} h-full`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full bg-[var(--bg-primary)] text-[#171717] antialiased">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme'),d=t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches);if(d)document.documentElement.classList.add('dark')}catch(e){}})()`,
+          }}
+        />
+      </head>
+      <body className="min-h-full bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased transition-colors duration-300">
         <div className="paper-texture" aria-hidden="true" />
         <div className="relative z-[1]">{children}</div>
+        <ThemeToggle />
       </body>
     </html>
   );
