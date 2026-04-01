@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { inter, notoSerifSC, geistMono } from "@/lib/fonts";
+import {
+  inter,
+  notoSerifSC,
+  geistMono,
+  instrumentSerif,
+} from "@/lib/fonts";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { LocaleProvider } from "@/components/LocaleProvider";
@@ -26,7 +31,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale === "en" ? "en" : "zh-CN"}
-      className={`${inter.variable} ${notoSerifSC.variable} ${geistMono.variable} h-full`}
+      className={`${inter.variable} ${notoSerifSC.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full`}
       suppressHydrationWarning
     >
       <head>

@@ -19,13 +19,24 @@ export default async function Home() {
         <div className="max-w-2xl text-center">
           <h1
             className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            style={{
+              fontFamily:
+                locale === "en"
+                  ? 'var(--font-instrument-serif), "Instrument Serif", serif'
+                  : "var(--font-inter), Inter, sans-serif",
+              fontWeight: locale === "en" ? 400 : 700,
+            }}
           >
             {s.bookTitle}
           </h1>
           <p
             className="text-xl sm:text-2xl text-[var(--text-secondary)] mb-4"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            style={{
+              fontFamily:
+                locale === "en"
+                  ? 'var(--font-instrument-serif), "Instrument Serif", serif'
+                  : "var(--font-inter), Inter, sans-serif",
+            }}
           >
             {s.bookSubtitle}
           </p>
@@ -74,7 +85,13 @@ export default async function Home() {
                 </span>
                 <h2
                   className="text-xl font-semibold"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  style={{
+                    fontFamily:
+                      locale === "en"
+                        ? 'var(--font-instrument-serif), "Instrument Serif", serif'
+                        : "var(--font-inter), Inter, sans-serif",
+                    fontWeight: locale === "en" ? 400 : 600,
+                  }}
                 >
                   {partStrings.title}
                 </h2>

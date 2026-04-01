@@ -77,7 +77,13 @@ export default async function ChapterPage({
             </p>
             <h1
               className="text-3xl font-bold tracking-tight"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              style={{
+                fontFamily:
+                  locale === "en"
+                    ? 'var(--font-instrument-serif), "Instrument Serif", serif'
+                    : "var(--font-inter), Inter, sans-serif",
+                fontWeight: locale === "en" ? 400 : 700,
+              }}
             >
               {locale === "en"
                 ? `Chapter ${chapter.number}`
