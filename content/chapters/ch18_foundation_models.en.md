@@ -42,6 +42,11 @@ The number of players and models in this field has exploded over the last two ye
 
 **NVIDIA GR00T N1 Series.** NVIDIA released GR00T N1 in March 2025, positioned as "the first open foundation model for humanoid robots." It uses a dual-system architecture: a fast action model handles real-time control and action generation (running on-device), while a slow VLM handles scene understanding and task planning. By version N1.5, success rates on the DreamGen simulation benchmark jumped from 13.1% to 38.3%. The latest **N1.6** (announced at CES 2026) further refined the architecture and data pipeline. NVIDIA's strategy is clear: be the "Android" of robot AI — open-source the models, but you need their Isaac simulation platform to train and deploy.
 
+<figure>
+  <img src="/images/ch18/galbot_g1.png" alt="Galbot G1 performing generalized manipulation in a kitchen setting" />
+  <figcaption>Galbot G1 performing generalized manipulation in a kitchen — VLAs' path to real-world deployment may not be "universal generalist" but rather "go deep in a vertical first." Source: Galbot</figcaption>
+</figure>
+
 **Galbot GraspVLA / GroceryVLA.** This is a fascinating case. GraspVLA is the first VLA foundation model specifically targeting grasping, trained on SynGrasp-1B — a billion-frame synthetic dataset. It achieves zero-shot grasping: give it an object it has never seen, and it grasps it successfully without any additional training. Building on this, **GroceryVLA** specializes for retail — at WAIC 2025, it demonstrated autonomous shelf-stocking across hundreds of different products. This suggests that VLAs' path to real-world deployment may not be "universal generalist" but rather "go deep in a vertical first."
 
 <figure>
@@ -50,6 +55,11 @@ The number of players and models in this field has exploded over the last two ye
 </figure>
 
 **Physical Intelligence (Pi) — The pi-0 Series.** Co-founded by Karol Hausman (Google Brain), Sergey Levine (UC Berkeley), and Chelsea Finn (Stanford). **pi-0** is a 3-billion-parameter VLA that uses flow matching to generate continuous action trajectories at 50Hz, trained across 7 robot embodiments and 68 tasks. **pi-0.5** added a hierarchical architecture (predict textual subtasks first, then low-level actions). **pi-0.6** brought RL into VLA fine-tuning, doubling throughput on real-world tasks. Code and weights are fully open-source (the openpi repo), making it the most widely reproduced and extended VLA baseline in the community.
+
+<figure>
+  <img src="/images/ch18/skild_omni_body.jpg" alt="Skild AI's omni-bodied vision: the same model controlling humanoids, dual-arm, and single-arm robots" />
+  <figcaption>Skild AI's omni-bodied vision — the same Skild Brain controls humanoids, dual-arm setups, and single-arm robots performing manipulation tasks. Source: Skild AI</figcaption>
+</figure>
 
 **Skild AI — "One Brain for Every Body."** Founded by CMU's Deepak Pathak and Abhinav Gupta. Instead of training models for specific robot form factors, they're building an **omni-bodied** foundation model — the Skild Brain. Same model controls quadrupeds, humanoids, tabletop arms, and mobile manipulators without robot-specific adaptation. Valued at $14 billion — the highest among pure-play robotics foundation model companies. That said, how much of the "one model for all robots" vision will actually materialize remains an open question with plenty of skeptics.
 

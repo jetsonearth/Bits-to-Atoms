@@ -1,15 +1,15 @@
 export type Locale = "zh" | "en";
 
-export const DEFAULT_LOCALE: Locale = "zh";
+export const DEFAULT_LOCALE: Locale = "en";
 export const LOCALE_COOKIE = "locale";
 
 // All UI strings
 export const strings = {
   zh: {
-    bookTitle: "从代码到现实世界",
-    bookSubtitle: "AI 开发者的机器人全栈指南",
+    bookTitle: "从比特到物理世界",
+    bookSubtitle: "AI 及软件开发者的机器人全栈指南",
     bookTagline:
-      "写给每一个写过 Python、训过模型、但从没让一台机器在真实世界里动起来的人。",
+      "致所有写过 Python 的前端的软件工程师 - 现在，是时候你的代码在物理世界跑起来了。",
     startReading: "开始阅读",
     chapters: "章",
     partsLabel: "部分",
@@ -62,10 +62,10 @@ export const strings = {
     ],
   },
   en: {
-    bookTitle: "From Code to the Real World",
-    bookSubtitle: "A Full-Stack Robotics Guide for AI Developers",
+    bookTitle: "From Bits to the Physical World",
+    bookSubtitle: "A Full-Stack Robotics Guide for AI and Software Developers",
     bookTagline:
-      "For anyone who has written Python, trained models, but never made a machine move in the real world.",
+      "For every developer who's shipped code but never shipped atoms. Your next deployment won't be on the cloud, it will be on the ground.",
     startReading: "Start Reading",
     chapters: "chapters",
     partsLabel: "parts",

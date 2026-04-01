@@ -12,9 +12,9 @@ export interface Part {
 }
 
 export const bookTitle = "从代码到现实世界";
-export const bookSubtitle = "AI 开发者的机器人全栈指南";
+export const bookSubtitle = "AI 和软件开发者的机器人全栈指南";
 export const bookTagline =
-  "写给每一个写过 Python、训过模型、但从没让一台机器在真实世界里动起来的人。";
+  "写给每一个写过 Python、训练过模型、但没没机会让一台机器在真实世界里动起来的人。";
 
 export const parts: Part[] = [
   {

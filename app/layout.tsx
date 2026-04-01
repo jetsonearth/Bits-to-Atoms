@@ -8,6 +8,7 @@ import {
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { LocaleProvider } from "@/components/LocaleProvider";
+import { PageTransition } from "@/components/PageTransition";
 import { getServerLocale } from "@/lib/locale-server";
 import "./globals.css";
 
@@ -44,7 +45,9 @@ export default async function RootLayout({
       <body className="min-h-full bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased transition-colors duration-300">
         <div className="paper-texture" aria-hidden="true" />
         <LocaleProvider initial={locale}>
-          <div className="relative z-[1]">{children}</div>
+          <PageTransition>
+            <div className="relative z-[1]">{children}</div>
+          </PageTransition>
           <LanguageToggle />
           <ThemeToggle />
         </LocaleProvider>

@@ -42,6 +42,11 @@
 
 **NVIDIA GR00T N1 系列**。NVIDIA 在 2025 年 3 月发布了 GR00T N1，定位为“第一个开放的人形机器人基础模型”。它的架构是双系统设计：一个快速的 action model 负责实时控制和动作生成（跑在机器人本体上），一个慢速的 VLM 负责场景理解和任务规划。到 N1.5 版本，在 DreamGen 仿真基准上的成功率从 13.1% 提升到 38.3%。最新的 **N1.6**（2026 年 CES 发布）进一步优化了架构和数据管线。NVIDIA 的策略很明确：做机器人 AI 的“Android” - 模型开源，但你得用它的 Isaac 仿真平台来训练和部署。
 
+<figure>
+  <img src="/images/ch18/galbot_g1.png" alt="银河通用 Galbot G1 在厨房场景中执行泛化操作" />
+  <figcaption>银河通用 Galbot G1 在厨房场景中执行泛化操作 — VLA 的一个现实落地路径可能不是"通用万能"，而是在垂直场景里先打透。图源：Galbot</figcaption>
+</figure>
+
 **银河通用（Galbot）GraspVLA / GroceryVLA**。这是一个很有意思的案例。GraspVLA 是第一个专门针对抓取任务的 VLA 基础模型，训练数据来自 SynGrasp-1B - 一个十亿帧级别的仿真合成数据集。它能做到零样本抓取：给一个从没见过的物体，不需要额外训练就能成功抓起来。在此基础上，**GroceryVLA** 针对零售场景做了特化 - 在 2025 年 WAIC 上展示了能处理数百种不同商品的自主上货能力。这说明 VLA 的一个现实落地路径可能不是“通用万能”，而是在垂直场景里先打透。
 
 <figure>
@@ -50,6 +55,11 @@
 </figure>
 
 **Physical Intelligence（Pi）pi-0 系列**。由 Google Brain 的 Karol Hausman、UC Berkeley 的 Sergey Levine、Stanford 的 Chelsea Finn 联合创立。**pi-0** 是一个 30 亿参数的 VLA，用 flow matching 生成连续动作轨迹，推理频率 50Hz，训练数据跨越 7 种机器人形态和 68 个任务。后续的 **pi-0.5** 引入层级架构（先预测文本子任务，再预测底层动作），**pi-0.6** 把 RL 引入 VLA 微调，吞吐量翻倍。代码和权重完全开源（openpi 仓库），是目前社区复现和扩展最多的 VLA 基线。
+
+<figure>
+  <img src="/images/ch18/skild_omni_body.jpg" alt="Skild AI 的 omni-bodied 愿景：同一个模型控制人形、机械臂、双臂等不同形态的机器人" />
+  <figcaption>Skild AI 的 omni-bodied 愿景 — 同一个 Skild Brain 控制人形、双臂、单臂等不同形态的机器人执行操作任务。图源：Skild AI</figcaption>
+</figure>
 
 **Skild AI - "一个大脑控制所有身体"**。由 CMU 的 Deepak Pathak 和 Abhinav Gupta 创立。他们不针对特定机器人形态训练模型，而是做 **omni-bodied（全形态通用）** 的基础模型 - Skild Brain。同一个模型控制四足、人形、机械臂、移动平台，不需要针对具体机器人做适配。估值 140 亿美元，是赛道里估值最高的纯玩家。不过"一个模型控制所有机器人"的愿景到底能兑现多少，行业里还有不少怀疑的声音。
 

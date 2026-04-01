@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   parts,
-  allChapters,
 } from "@/content/book";
 import { getServerLocale } from "@/lib/locale-server";
 import { t } from "@/lib/i18n";
@@ -15,7 +14,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <header className="noise-bg flex flex-col items-center justify-center px-6 pt-40 pb-12">
+      <header className="noise-bg relative flex flex-col items-center justify-center px-6 pt-40 pb-12">
         <div className="max-w-2xl text-center">
           <h1
             className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
@@ -61,9 +60,13 @@ export default async function Home() {
         </div>
 
         {/* Chapter count */}
-        <p className="mt-8 text-xs text-[var(--text-tertiary)] tracking-wider">
+        {/* <p className="mt-8 text-xs text-[var(--text-tertiary)] tracking-wider">
           {allChapters.length} {s.chapters} &middot; {parts.length} {s.partsLabel}
-        </p>
+        </p> */}
+
+        <div className="pointer-events-none absolute left-1/2 bottom-0 w-screen -translate-x-1/2 translate-y-1/2">
+          <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-white/85 to-transparent shadow-[0_0_34px_rgba(255,255,255,0.34)]" />
+        </div>
       </header>
 
       {/* TOC — flat list with part groupings */}
