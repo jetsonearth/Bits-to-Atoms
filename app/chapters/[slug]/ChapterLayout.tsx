@@ -38,7 +38,7 @@ export function ChapterLayout({
         onClose={() => setSidebarOpen(false)}
       />
 
-      <main className="flex-1 min-w-0">
+      <main className="flex-1 min-w-0 bg-[var(--bg-content)]">
         {/* Mobile top bar */}
         <div className="sticky top-0 z-30 lg:hidden bg-[var(--bg-primary)]/80 backdrop-blur-sm border-b border-[var(--border-secondary)] px-4 py-3">
           <button

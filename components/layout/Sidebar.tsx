@@ -87,7 +87,7 @@ export function Sidebar({
       )}
 
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-[var(--bg-primary)] border-r border-[var(--border-secondary)] z-50 overflow-y-auto transition-transform duration-300 lg:translate-x-0 lg:static lg:z-auto lg:min-h-screen ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[var(--bg-primary)] border-r border-[var(--border-secondary)] z-50 overflow-y-auto transition-transform duration-300 lg:translate-x-0 lg:sticky lg:z-auto lg:h-screen lg:top-0 lg:shrink-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
