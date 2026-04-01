@@ -11,22 +11,22 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <header className="noise-bg flex flex-col items-center justify-center px-6 pt-32 pb-20">
+      <header className="noise-bg flex flex-col items-center justify-center px-6 pt-40 pb-12">
         <div className="max-w-2xl text-center">
           <h1
-            className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight mb-5 leading-[1.15]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
           >
             {bookTitle}
           </h1>
           <p
-            className="text-lg sm:text-xl text-[var(--text-secondary)] mb-3"
+            className="text-xl sm:text-2xl text-[var(--text-secondary)] mb-4"
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
           >
             {bookSubtitle}
           </p>
           <p
-            className="text-[15px] text-[var(--text-tertiary)] max-w-md mx-auto mb-10 leading-relaxed"
+            className="text-base sm:text-lg text-[var(--text-secondary)] max-w-lg mx-auto mb-10 leading-relaxed"
             style={{
               fontFamily:
                 'var(--font-noto-serif-sc), "Noto Serif SC", serif',
@@ -43,14 +43,14 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Chapter count, below CTA */}
-        <p className="mt-10 text-xs text-[var(--text-tertiary)] tracking-wider">
+        {/* Chapter count */}
+        <p className="mt-8 text-xs text-[var(--text-tertiary)] tracking-wider">
           {allChapters.length} 章 &middot; {parts.length} 部分
         </p>
       </header>
 
       {/* TOC — flat list with part groupings */}
-      <section className="max-w-4xl mx-auto px-6 py-20">
+      <section className="max-w-4xl mx-auto px-6 pt-10 pb-20">
         {parts.map((part, partIdx) => (
           <div
             key={part.number}

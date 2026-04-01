@@ -54,17 +54,17 @@ export function PageTOC() {
   if (headings.length < 2) return null;
 
   return (
-    <nav className="hidden xl:block w-52 shrink-0">
+    <nav className="hidden xl:block w-52 shrink-0 ml-12">
       <div className="sticky top-8">
-        <p className="text-xs font-semibold text-[var(--text-tertiary)] uppercase tracking-wider mb-3">
+        <p className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-widest mb-4">
           On this page
         </p>
-        <ul className="space-y-1">
+        <ul className="space-y-2.5">
           {headings.map((h) => (
             <li key={h.id}>
               <a
                 href={`#${h.id}`}
-                className={`block text-sm py-0.5 transition-colors ${
+                className={`block text-[13px] leading-snug transition-colors ${
                   h.level === 3 ? "pl-3" : ""
                 } ${
                   activeId === h.id
