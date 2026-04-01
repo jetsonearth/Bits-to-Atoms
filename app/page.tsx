@@ -30,7 +30,7 @@ export default async function Home() {
             {s.bookTitle}
           </h1>
           <p
-            className="text-xl sm:text-2xl text-[var(--text-secondary)] mb-4"
+            className="text-[1.6rem] sm:text-[2rem] leading-[1.18] text-[var(--text-secondary)] mb-4"
             style={{
               fontFamily:
                 locale === "en"
@@ -84,7 +84,7 @@ export default async function Home() {
                   Part {part.number}
                 </span>
                 <h2
-                  className="text-xl font-semibold"
+                  className="text-2xl sm:text-[1.7rem] font-semibold"
                   style={{
                     fontFamily:
                       locale === "en"
@@ -95,7 +95,7 @@ export default async function Home() {
                 >
                   {partStrings.title}
                 </h2>
-                <span className="text-sm text-[var(--text-tertiary)]">
+                <span className="text-[15px] text-[var(--text-secondary)]">
                   {partStrings.subtitle}
                 </span>
               </div>
