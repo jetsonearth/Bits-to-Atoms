@@ -23,7 +23,8 @@ export default function RootLayout({
       className={`${inter.variable} ${notoSerifSC.variable} ${geistMono.variable} h-full`}
     >
       <body className="min-h-full bg-[var(--bg-primary)] text-[#171717] antialiased">
-        {children}
+        <div className="paper-texture" aria-hidden="true" />
+        <div className="relative z-[1]">{children}</div>
       </body>
     </html>
   );
