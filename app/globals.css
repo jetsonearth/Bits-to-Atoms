@@ -1,26 +1,192 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
+  --text-primary: #171717;
+  --text-secondary: #525252;
+  --text-tertiary: #a3a3a3;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-subtle: #eff6ff;
+  --border-primary: #e5e5e5;
+  --border-secondary: #f0f0f0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Chinese typography optimizations */
+.chapter-content {
+  font-family: var(--font-noto-serif-sc), "Noto Serif SC", "PingFang SC",
+    "Microsoft YaHei", serif;
+  font-size: 17px;
+  line-height: 1.875;
+  letter-spacing: 0.02em;
+  text-align: justify;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.chapter-content h2,
+.chapter-content h3,
+.chapter-content h4 {
+  font-family: var(--font-inter), Inter, "PingFang SC", "Microsoft YaHei",
+    sans-serif;
+  text-align: left;
+  letter-spacing: 0;
+}
+
+.chapter-content h2 {
+  font-size: 1.625rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.chapter-content h2:first-child {
+  margin-top: 0;
+}
+
+.chapter-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.chapter-content p {
+  margin-bottom: 1.25rem;
+}
+
+.chapter-content strong {
+  font-weight: 600;
+}
+
+.chapter-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.chapter-content a:hover {
+  color: var(--accent-hover);
+}
+
+.chapter-content ul,
+.chapter-content ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.chapter-content li {
+  margin-bottom: 0.375rem;
+}
+
+.chapter-content li > ul,
+.chapter-content li > ol {
+  margin-top: 0.375rem;
+  margin-bottom: 0;
+}
+
+.chapter-content blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-style: normal;
+}
+
+/* Inline code */
+.chapter-content code:not(pre code) {
+  font-family: var(--font-geist-mono), "Geist Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.875em;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 4px;
+  padding: 0.125em 0.35em;
+}
+
+/* Code blocks */
+.chapter-content pre {
+  font-family: var(--font-geist-mono), "Geist Mono", "SF Mono", Menlo, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.chapter-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Tables */
+.chapter-content .table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+}
+
+.chapter-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.chapter-content thead {
+  background: var(--bg-tertiary);
+}
+
+.chapter-content th {
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-primary);
+  white-space: nowrap;
+}
+
+.chapter-content td {
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.chapter-content tr:last-child td {
+  border-bottom: none;
+}
+
+/* Horizontal rules */
+.chapter-content hr {
+  border: none;
+  border-top: 1px solid var(--border-primary);
+  margin: 2.5rem 0;
+}
+
+/* Scrollbar for code blocks */
+.chapter-content pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.chapter-content pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chapter-content pre::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 3px;
 }
