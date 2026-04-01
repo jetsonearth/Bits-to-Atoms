@@ -4,34 +4,29 @@ import {
   bookSubtitle,
   bookTagline,
   parts,
+  allChapters,
 } from "@/content/book";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero with subtle texture */}
-      <header className="noise-bg border-b border-[var(--border-secondary)] bg-[var(--bg-secondary)]">
-        <div className="relative max-w-3xl mx-auto px-6 pt-28 pb-20 text-center">
-          {/* Subtle chapter count badge */}
-          <p className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-tertiary)] border border-[var(--border-primary)] rounded-full px-3 py-1 mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-tertiary)]" />
-            26 chapters &middot; 9 parts
-          </p>
-
+      {/* Hero — full viewport, centered */}
+      <header className="noise-bg min-h-[85vh] flex flex-col items-center justify-center px-6 pb-16">
+        <div className="max-w-2xl text-center">
           <h1
-            className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight mb-5 text-[var(--text-primary)]"
+            className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight mb-5 leading-[1.15]"
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
           >
             {bookTitle}
           </h1>
           <p
-            className="text-lg sm:text-xl text-[var(--text-secondary)] mb-4"
+            className="text-lg sm:text-xl text-[var(--text-secondary)] mb-3"
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
           >
             {bookSubtitle}
           </p>
           <p
-            className="text-base text-[var(--text-tertiary)] max-w-lg mx-auto mb-12 leading-relaxed"
+            className="text-[15px] text-[var(--text-tertiary)] max-w-md mx-auto mb-10 leading-relaxed"
             style={{
               fontFamily:
                 'var(--font-noto-serif-sc), "Noto Serif SC", serif',
@@ -39,90 +34,91 @@ export default function Home() {
           >
             {bookTagline}
           </p>
-          <div className="flex items-center justify-center gap-4">
-            <Link
-              href="/chapters/ch01_what_is_a_robot"
-              className="inline-flex items-center gap-2 bg-[var(--text-primary)] text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-neutral-700 transition-colors"
-            >
-              开始阅读
-              <span>&rarr;</span>
-            </Link>
-            <Link
-              href="#toc"
-              className="inline-flex items-center gap-2 border border-[var(--border-primary)] px-6 py-3 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:border-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
-            >
-              浏览目录
-            </Link>
-          </div>
+          <Link
+            href="/chapters/ch01_what_is_a_robot"
+            className="inline-flex items-center gap-2 bg-[var(--text-primary)] text-[var(--bg-primary)] px-7 py-3 rounded-lg text-sm font-medium hover:bg-neutral-700 transition-colors"
+          >
+            开始阅读
+            <span>&rarr;</span>
+          </Link>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="mt-auto pt-12 text-[var(--text-tertiary)]">
+          <p className="text-xs tracking-widest uppercase mb-2">
+            {allChapters.length} 章 &middot; {parts.length} 部分
+          </p>
+          <svg
+            className="w-4 h-4 mx-auto animate-bounce"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </div>
       </header>
 
-      {/* TOC Overview */}
-      <section id="toc" className="max-w-5xl mx-auto px-6 py-20">
-        <div className="flex items-center gap-4 mb-10">
-          <div className="h-px flex-1 bg-[var(--border-primary)]" />
-          <h2
-            className="text-xs font-semibold text-[var(--text-tertiary)] uppercase tracking-[0.15em] shrink-0"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+      {/* TOC — flat list with part groupings */}
+      <section className="max-w-4xl mx-auto px-6 py-20">
+        {parts.map((part, partIdx) => (
+          <div
+            key={part.number}
+            className={partIdx > 0 ? "mt-12" : ""}
           >
-            目录
-          </h2>
-          <div className="h-px flex-1 bg-[var(--border-primary)]" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {parts.map((part) => (
-            <div
-              key={part.number}
-              className="group relative border border-[var(--border-primary)] rounded-xl p-6 transition-all duration-200 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:border-[var(--text-tertiary)]"
-            >
-              {/* Part number - large faint background */}
-              <span className="absolute top-3 right-4 text-5xl font-bold text-[var(--bg-tertiary)] select-none pointer-events-none transition-colors duration-200 group-hover:text-[var(--border-primary)]">
-                {part.number}
+            {/* Part header */}
+            <div className="flex items-baseline gap-3 mb-4">
+              <span
+                className="text-[11px] font-semibold text-[var(--text-tertiary)] uppercase tracking-widest shrink-0"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                Part {part.number}
               </span>
-
-              <div className="relative">
-                <p className="text-[10px] font-semibold text-[var(--text-tertiary)] uppercase tracking-widest mb-2">
-                  Part {part.number} &middot; {part.chapters.length} 章
-                </p>
-                <h3
-                  className="text-lg font-semibold mb-0.5 transition-colors"
-                  style={{
-                    fontFamily: "var(--font-inter), Inter, sans-serif",
-                  }}
-                >
-                  {part.title}
-                </h3>
-                <p className="text-sm text-[var(--text-tertiary)] mb-5">
-                  {part.subtitle}
-                </p>
-
-                <ul className="space-y-1.5 border-t border-[var(--border-secondary)] pt-4">
-                  {part.chapters.map((ch) => (
-                    <li key={ch.slug}>
-                      <Link
-                        href={`/chapters/${ch.slug}`}
-                        className="flex items-center gap-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-0.5 group/link"
-                      >
-                        <span className="text-[11px] font-mono text-[var(--text-tertiary)] w-5 shrink-0 group-hover/link:text-[var(--text-secondary)]">
-                          {String(ch.number).padStart(2, "0")}
-                        </span>
-                        {ch.fileTitle}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h2
+                className="text-xl font-semibold"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                {part.title}
+              </h2>
+              <span className="text-sm text-[var(--text-tertiary)]">
+                {part.subtitle}
+              </span>
             </div>
-          ))}
-        </div>
+
+            {/* Chapter list */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1 pl-0 sm:pl-14">
+              {part.chapters.map((ch) => (
+                <Link
+                  key={ch.slug}
+                  href={`/chapters/${ch.slug}`}
+                  className="group flex items-baseline gap-3 py-2 border-b border-[var(--border-secondary)] hover:border-[var(--text-tertiary)] transition-colors"
+                >
+                  <span className="text-xs font-mono text-[var(--text-tertiary)] shrink-0 group-hover:text-[var(--text-secondary)] transition-colors">
+                    {String(ch.number).padStart(2, "0")}
+                  </span>
+                  <span className="text-[15px] text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
+                    {ch.fileTitle}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
       </section>
 
       {/* Footer */}
-      <footer className="noise-bg bg-[var(--bg-secondary)] border-t border-[var(--border-secondary)]">
-        <div className="relative max-w-3xl mx-auto px-6 py-10 text-center">
-          <p className="text-sm text-[var(--text-tertiary)]">
-            By Jetson &middot; Dimensional
+      <footer className="border-t border-[var(--border-secondary)]">
+        <div className="max-w-4xl mx-auto px-6 py-8 flex items-center justify-between">
+          <p className="text-xs text-[var(--text-tertiary)]">
+            By Jetson
+          </p>
+          <p className="text-xs text-[var(--text-tertiary)]">
+            Dimensional
           </p>
         </div>
       </footer>

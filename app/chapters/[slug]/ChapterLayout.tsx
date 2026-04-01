@@ -40,7 +40,7 @@ export function ChapterLayout({
 
       <main className="flex-1 min-w-0">
         {/* Mobile top bar */}
-        <div className="sticky top-0 z-30 lg:hidden bg-white/80 backdrop-blur-sm border-b border-[var(--border-secondary)] px-4 py-3">
+        <div className="sticky top-0 z-30 lg:hidden bg-[var(--bg-primary)]/80 backdrop-blur-sm border-b border-[var(--border-secondary)] px-4 py-3">
           <button
             onClick={() => setSidebarOpen(true)}
             className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"

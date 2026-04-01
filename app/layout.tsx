@@ -22,7 +22,7 @@ export default function RootLayout({
       lang="zh-CN"
       className={`${inter.variable} ${notoSerifSC.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full bg-white text-[#171717] antialiased">
+      <body className="min-h-full bg-[var(--bg-primary)] text-[#171717] antialiased">
         {children}
       </body>
     </html>

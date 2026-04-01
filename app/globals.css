@@ -2,9 +2,9 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #fafafa;
-  --bg-tertiary: #f5f5f5;
+  --bg-primary: #f8f8f7;
+  --bg-secondary: #f2f1ef;
+  --bg-tertiary: #eceae7;
   --text-primary: #171717;
   --text-secondary: #525252;
   --text-tertiary: #a3a3a3;
