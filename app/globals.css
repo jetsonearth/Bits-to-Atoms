@@ -87,6 +87,12 @@ body {
   word-break: normal;
 }
 
+/* English prose: avoid justified “rivers” in paragraphs and table cells */
+.chapter-content--en {
+  text-align: left;
+  letter-spacing: normal;
+}
+
 .chapter-content h2,
 .chapter-content h3,
 .chapter-content h4 {

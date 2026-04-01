@@ -86,7 +86,15 @@ export default async function ChapterPage({
           </div>
 
           {/* Rendered markdown */}
-          <div className="chapter-content">{renderedContent}</div>
+          <div
+            className={
+              locale === "en"
+                ? "chapter-content chapter-content--en"
+                : "chapter-content"
+            }
+          >
+            {renderedContent}
+          </div>
 
           {/* Prev/Next navigation */}
           <ChapterNav slug={slug} />
