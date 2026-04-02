@@ -7,7 +7,7 @@
 Isaac Sim 是 NVIDIA 推出的机器人仿真平台，底层基于 Omniverse 技术栈。它的核心卖点是**高保真** - 物理引擎精度高（用的是 PhysX 5）、渲染效果好（支持光线追踪）、传感器模拟逼真（仿真 LiDAR 输出的点云格式和真实 LiDAR 一样）。如果说 Gazebo 是机器人仿真的”记事本”，Isaac Sim 更像是”Photoshop” - 功能强大，但吃配置、上手曲线陡。
 
 <figure>
-  <img src=”/images/ch15/isaac_sim_warehouse_featured.jpg” alt=”Isaac Sim 仓库仿真场景” />
+  <img src="/images/ch15/isaac_sim_warehouse_featured.jpg" alt="Isaac Sim 仓库仿真场景" />
   <figcaption>Isaac Sim 中的高保真仓库场景 — 传送带、虚拟工人、AMR 机器人共同构成一个逼真的物流仿真环境，光线追踪渲染让画面接近真实照片。图源：NVIDIA Developer Blog</figcaption>
 </figure>
 

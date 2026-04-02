@@ -19,14 +19,14 @@
 目前对开发者最友好的是 **宇树（Unitree）**。Go2 机器狗一万多人民币（EDU 版），是很多人的第一台真机。SDK 开源，Python/C++ 接口，支持关节级控制，有 ROS 2 包装和 Isaac Gym 的 RL 训练环境。如果你就是想”买一台回来写代码”，它是目前性价比最高的入口。
 
 <figure>
-  <img src=”/images/ch03/unitree_go2.jpg” alt=”宇树 Go2 机器狗在雪地中行走” />
+  <img src="/images/ch03/unitree_go2.jpg" alt="宇树 Go2 机器狗在雪地中行走" />
   <figcaption>宇树 Go2 四足机器人 — 罗马尼亚山地救援队（Salvamont）部署的 Go2，用于高海拔环境巡逻。图源：Wikimedia Commons / HotNews Romania, CC BY 3.0</figcaption>
 </figure>
 
 另一个极端是 **Boston Dynamics**。Spot 的 SDK 是行业标杆 - 文档最好、功能最完整（自主导航、机械臂操控、在机器人上跑自定义 ML 模型）。问题是七八万美元起步。你可能买不起，但如果有机会用一台 Spot，它会帮你建立”好的开发者体验应该长什么样”的标准。
 
 <figure>
-  <img src=”/images/ch03/boston_dynamics_spot.jpg” alt=”Boston Dynamics Spot 机器人在户外林间小路上” />
+  <img src="/images/ch03/boston_dynamics_spot.jpg" alt="Boston Dynamics Spot 机器人在户外林间小路上" />
   <figcaption>Boston Dynamics Spot — 自主导航、机械臂操控、可部署自定义 ML 模型，SDK 是行业标杆。图源：Wikimedia Commons / Jonte, CC BY-SA 4.0</figcaption>
 </figure>
 

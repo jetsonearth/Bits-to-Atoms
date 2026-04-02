@@ -7,7 +7,7 @@
 这不是段子，这是两个机器人生态的现实差距。你在哪里做机器人，决定了你能多快试错、多便宜试错、以及你的团队长什么样。这一章不是要分个高下 - 两边各有各的结构性优势和结构性短板。但如果你要进入这个行业，你需要知道这张地图长什么样。
 
 <figure>
-  <img src=”/images/ch25/huaqiangbei_entrance.jpg” alt=”深圳华强北电子市场入口” />
+  <img src="/images/ch25/huaqiangbei_entrance.jpg" alt="深圳华强北电子市场入口" />
   <figcaption>深圳华强北 — “中国电子第一街”，全球最大的电子元器件集散地。机器人所需的电机、传感器、控制板在这里都能一站式采购。图源：Wikimedia Commons, CC BY-SA 3.0</figcaption>
 </figure>
 

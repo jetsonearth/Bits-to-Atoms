@@ -23,7 +23,7 @@
 **接口和实时性。** MacBook 的接口是给人用的 - USB-C、HDMI、WiFi。机器人的计算平台需要直接对接传感器和执行器：多路 MIPI CSI 相机接口、CAN 总线（和电机驱动器通信的工业协议）、GPIO（通用输入输出引脚，用来触发和读取简单信号）、多路以太网。更关键的是，机器人需要**确定性的实时响应** - 不是“平均 10 毫秒处理完”，而是“保证每次都在 10 毫秒内处理完”。macOS 不是实时操作系统，它可能在任何时候因为后台任务暂停你的程序几十毫秒。Jetson 跑的是 Linux，配合 PREEMPT_RT 内核补丁可以提供更好的实时性保证。
 
 <figure>
-  <img src=”/images/ch06/jetson_nano.jpg” alt=”NVIDIA Jetson Nano 开发者套件” />
+  <img src="/images/ch06/jetson_nano.jpg" alt="NVIDIA Jetson Nano 开发者套件" />
   <figcaption>NVIDIA Jetson Nano 开发者套件 — 入门级嵌入式 AI 计算平台，尺寸紧凑、功耗极低，适合学习和轻量级机器人项目。图源：SparkFun Electronics / Wikimedia Commons (CC BY 2.0)</figcaption>
 </figure>
 
