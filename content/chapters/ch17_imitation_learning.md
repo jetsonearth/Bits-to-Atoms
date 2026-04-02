@@ -16,11 +16,21 @@
 
 VR 遥操作的优点是直觉性强 - 你动手，机器人跟着动，学习曲线很短。缺点是延迟和精度。网络传输加上逆运动学计算，总会有几十毫秒的延迟，对于精细操作（比如穿针引线）这点延迟就够你抓狂了。
 
+<figure>
+  <img src="/images/ch17/vr_teleoperation.jpg" alt="VR 遥操作系统示意" />
+  <figcaption>VR 遥操作与多种机器人平台 — 操作员佩戴 Meta Quest 头显，通过手部追踪实时控制单臂、双臂及灵巧手等不同构型的机械臂。图源：Open Teach Project</figcaption>
+</figure>
+
 **主从式遥操作**是另一条路。你有一台“主臂”（leader arm），操作员直接用手推拉它，另一台“从臂”（follower arm）实时复制主臂的动作。ALOHA 系统实际上就是这种架构 - 两对主从臂，操作员推动两台 leader 臂，两台 follower 臂同步执行。因为主从臂的运动学结构完全一致，映射关系是直接的关节角对应，延迟极低，精度也比 VR 方案好。
 
 对于人形机器人的全身操控，宇树 G1 的生态里已经有了 Homunculus Exoskeleton 这样的 7 自由度全身控制外骨骼。操作员穿上外骨骼，身体的运动直接映射到机器人全身关节。这种方案的数据质量更高，因为操作员能直接“感受到”机器人的运动范围和物理约束。
 
 不管用哪种方式，关键输出都是一样的：一段一段的 **demonstration trajectory**（示范轨迹），每一帧包含观测数据（图像、关节角度等）和对应的动作数据（目标关节角度或末端位姿指令）。采集几十到几百条这样的轨迹，你就有了训练数据集。
+
+<figure>
+  <img src="/images/ch17/aloha2_camera_views.png" alt="ALOHA 2 多相机视角" />
+  <figcaption>ALOHA 2 双臂操作平台的多相机视角 — 四个机位同时捕捉桌面操作场景，为模仿学习提供丰富的视觉观测数据。图源：ALOHA 2, Google DeepMind</figcaption>
+</figure>
 
 ### 行为克隆 - 最朴素的模仿
 
@@ -52,11 +62,21 @@ for observation, action in demonstration_dataset:
 
 ACT 的架构用了一个 CVAE（Conditional Variational Autoencoder）来处理示范中的多模态性 - 同一个任务可能有不同的完成方式，比如先抓左边还是先抓右边。Encoder 部分在训练时看到完整动作序列来推断 style 变量，decoder 部分（一个 Transformer）根据观测和 style 变量生成动作 chunk。
 
+<figure>
+  <img src="/images/ch17/act_architecture.png" alt="ACT 算法架构" />
+  <figcaption>ACT（Action Chunking with Transformers）架构 — 左侧 CVAE encoder 在训练时从完整动作序列推断 style 变量，右侧 Transformer decoder 根据多相机观测和关节状态生成动作序列。图源：Tony Zhao et al., Stanford</figcaption>
+</figure>
+
 **Diffusion Policy** 来自 Columbia 大学的 Cheng Chi 等人，思路完全不同但同样优雅。它把动作生成建模为一个去噪扩散过程 - 和图像生成里的 Stable Diffusion 是同一个数学框架。从一团高斯噪声开始，经过多步去噪，逐步“生成”出一段合理的动作序列。
 
 Diffusion Policy 的杀手锏是处理 **multimodal action distribution（多模态动作分布）**。行为克隆用 MSE loss 训练时，如果同一个状态下有两种合理的动作（左绕和右绕都行），网络会输出两者的平均值 - 一个哪边都不是的错误动作。Diffusion 模型天然能表达多模态分布，它可以随机采样到“左绕”或“右绕”中的任何一种，而不会输出不伦不类的平均。
 
 在实验中，Diffusion Policy 在 12 个 benchmark 任务上比此前最好的方法平均提升了 46.9%。这不是一个渐进式的改进，而是一个代际跳跃。
+
+<figure>
+  <img src="/images/ch17/diffusion_policy_teaser.svg" alt="Diffusion Policy 概念图" />
+  <figcaption>三种 Policy 表征方式对比 — 从左到右依次为显式策略、隐式策略（能量函数）和扩散策略（通过学习到的梯度场将噪声逐步去噪为动作）。图源：Cheng Chi et al., Columbia University</figcaption>
+</figure>
 
 两个方法各有场景。ACT 架构更简单、推理更快，适合需要高频控制的任务（比如双臂协作操作）。Diffusion Policy 精度更高，但去噪过程需要多步迭代，推理速度慢一些，在需要极高成功率但对实时性要求稍低的场景更合适。实际上很多后续工作已经在融合两者 - 用 action chunking 的思路加上 diffusion 的生成方式。
 

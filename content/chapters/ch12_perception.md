@@ -22,9 +22,19 @@
 
 物体检测是感知流水线的第一步 - 在图像中找到目标物体并给出位置。这个领域的工具选择基本分成两条路线。
 
+<figure>
+  <img src="/images/ch12/realsense_depth_camera.jpg" alt="Intel RealSense 深度相机" />
+  <figcaption>Intel RealSense 深度相机 — 机器人感知系统最常用的传感器之一，能同时输出 RGB 图像和每个像素的深度值。图源：Wikimedia Commons</figcaption>
+</figure>
+
 **传统路线：YOLO 系列。** 如果你已经知道机器人要处理哪些物体（比如仓库场景下的几十种 SKU），YOLO 是最务实的选择。**YOLOv8**（Ultralytics 出品）在速度和精度之间取得了很好的平衡 - nano 版本在 Jetson Orin NX 上可以跑到 30+ FPS，足以满足实时需求。你用自己的数据集微调一个模型，部署时用 TensorRT 做推理加速，这是目前工业界最成熟的路径。
 
 **开放词汇路线：GroundingDINO / OWL-ViT。** 如果你不想为每个新物体都训一个模型怎么办？这就是 open-vocabulary detection 要解决的问题。**GroundingDINO** 可以接受自然语言描述作为输入 - 你告诉它“找到桌上的红色杯子”，它就能定位到，即使训练数据里没有见过这个特定的杯子。这对于需要处理长尾物品的场景（比如家庭服务机器人，面对的物品种类几乎无限）非常有吸引力。代价是推理速度比 YOLO 慢好几倍，在边缘端部署需要更多优化工作。
+
+<figure>
+  <img src="/images/ch12/sam_segmentation.jpg" alt="SAM (Segment Anything Model) 分割效果" />
+  <figcaption>SAM 的分割效果 — 给定提示即可精确分割任意物体轮廓，配合深度图可以提取目标物体的独立点云。图源：Meta AI</figcaption>
+</figure>
 
 **分割：SAM（Segment Anything Model）。** Meta 的 SAM 把“给定提示分割任意物体”这个能力做到了令人惊讶的泛化程度。在机器人场景里，常见的用法是先用 YOLO 或 GroundingDINO 拿到 bounding box，再用 SAM 得到精确的物体轮廓 mask。这个 mask 配合深度图，可以提取出只属于目标物体的点云 - 这比 bounding box 精确得多，对后续的位姿估计和抓取规划都有帮助。SAM 2 进一步支持了视频追踪，物体检测一次后可以在后续帧中持续跟踪而不需要重复检测。
 
@@ -34,6 +44,11 @@
 
 传统方法需要物体的 CAD 模型，先在模型上提取特征，再和真实图像中的特征做匹配。这在工业场景下可行（零件的 CAD 图纸本来就有），但在开放场景下不现实 - 你不可能有全世界所有物品的 CAD 模型。
 
+<figure>
+  <img src="/images/ch12/foundationpose_pipeline.jpg" alt="FoundationPose 6DoF 位姿估计流水线" />
+  <figcaption>FoundationPose 的位姿估计流水线 — 只需一张参考图即可估计未知物体的 6DoF 位姿，大幅降低了部署门槛。图源：NVIDIA Research</figcaption>
+</figure>
+
 新一代的方法正在解决这个问题。**FoundationPose**（NVIDIA，2024）只需要目标物体的一张 RGB 参考图或粗糙的 CAD 模型，就能估计它在新视角下的 6DoF 位姿。它结合了 neural implicit representation 和 render-and-compare 策略，在没见过的物体上也能泛化。**MegaPose**（INRIA）走的是类似的路线，在大规模合成数据上预训练，然后 zero-shot 推理新物体的位姿。
 
 这些模型的实际精度在大多数场景下已经够用（平移误差约 1-2cm，旋转误差约 5-10 度），但对于需要亚毫米精度的精密装配任务还差得远。这时候通常的做法是把模型的输出作为初始估计，再用 ICP（Iterative Closest Point）等经典点云配准算法做精细化。
@@ -41,6 +56,11 @@
 ### 深度估计与 3D 重建
 
 要得到物体的 3D 位置，你需要深度信息。如果机器人上有 RealSense 这样的深度相机，直接就能拿到每个像素的深度值。但深度相机有它的局限 - 在户外强光下结构光失效，对透明和反光物体深度数据满是噪声。
+
+<figure>
+  <img src="/images/ch12/depth_anything_teaser.png" alt="Depth Anything 单目深度估计效果" />
+  <figcaption>Depth Anything 的单目深度估计 — 从单张 RGB 图像预测稠密深度图，在深度相机失效的场景下是重要的补充方案。图源：Depth Anything Project</figcaption>
+</figure>
 
 **单目深度估计**提供了一种补充方案。**Depth Anything**（2024，港大 & TikTok）是目前效果最好的单目深度估计模型之一，它能从单张 RGB 图像预测出稠密的相对深度图。注意是“相对深度” - 它能告诉你“A 比 B 离相机更近”，但不能直接给出绝对距离（除非你做了额外的标定或用 V2 版本的 metric depth 模式）。在深度相机失效的场景下，这是一个有价值的 fallback。
 

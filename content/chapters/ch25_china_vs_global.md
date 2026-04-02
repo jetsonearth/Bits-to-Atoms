@@ -6,9 +6,14 @@
 
 这不是段子，这是两个机器人生态的现实差距。你在哪里做机器人，决定了你能多快试错、多便宜试错、以及你的团队长什么样。这一章不是要分个高下 - 两边各有各的结构性优势和结构性短板。但如果你要进入这个行业，你需要知道这张地图长什么样。
 
+<figure>
+  <img src=”/images/ch25/huaqiangbei_entrance.jpg” alt=”深圳华强北电子市场入口” />
+  <figcaption>深圳华强北 — “中国电子第一街”，全球最大的电子元器件集散地。机器人所需的电机、传感器、控制板在这里都能一站式采购。图源：Wikimedia Commons, CC BY-SA 3.0</figcaption>
+</figure>
+
 ---
 
-### 供应链：深圳的“一条街效应”
+### 供应链：深圳的”一条街效应”
 
 机器人是硬件产品，硬件产品的迭代速度被供应链决定。这一点上，中国 - 尤其是珠三角 - 的优势是碾压级的。
 
@@ -22,6 +27,11 @@
 
 **快速响应非标需求。** 机器人开发的早期阶段充满非标零件。你需要一个特殊尺寸的法兰盘、一个定制的线束、一块异形散热片 - 在深圳，这些需求通过微信群就能解决，最快隔天取货。在北美，这种需求走采购流程可能要几周。
 
+<figure>
+  <img src="/images/ch25/unitree_robot_dog.jpg" alt="宇树机器狗" />
+  <figcaption>宇树（Unitree）四足机器人 — 凭借珠三角供应链优势，宇树 Go2 机器狗零售价不到 1600 美元，彻底改变了四足机器人的价格门槛。图源：Wikimedia Commons, Public Domain</figcaption>
+</figure>
+
 但供应链优势有边界。精度最高的那一档器件 - 比如 Harmonic Drive 的 CSG 系列减速器、某些高端编码器 - 国产替代的性能还没完全追平。在对精度要求极致的场景（比如手术机器人），顶级元器件仍然依赖日本和德国。不过在商用服务机器人和大部分人形机器人场景，国产供应链已经完全够用。
 
 ---
@@ -33,6 +43,11 @@
 在硅谷/波士顿情况正好反过来。做 perception、做 planning、做 learning 的算法人才池深得多 - MIT、CMU、Stanford、Berkeley 每年输出大量相关 PhD。但你想找一个懂电机选型、懂结构强度分析、能跟工厂对接打样的硬件工程师，难度和成本都远高于中国。
 
 这个差异有历史原因。中国过去二十年的制造业升级培养了海量的机电一体化人才，但机器人软件（尤其是 ROS 生态、运动规划、状态估计这些偏学术的方向）在国内高校的教学体系里长期缺位。很多中国的机器人公司在算法层面是靠海归撑起来的 - 从 CMU、ETH Zurich、Georgia Tech 回来的 PhD 是核心算法团队的骨干。
+
+<figure>
+  <img src="/images/ch25/unitree_g1.jpg" alt="宇树 G1 人形机器人" />
+  <figcaption>宇树 G1 人形机器人 — 起价不到 16000 美元，在北美同类产品中价格优势显著。中国在人形机器人硬件量产上走在前列。图源：Wikimedia Commons / Sayanesy, CC0</figcaption>
+</figure>
 
 反过来，美国的优势在基础研究和算法创新。Google DeepMind、NVIDIA Research、Toyota Research Institute、Boston Dynamics 的 AI 实验室 - 全球最前沿的机器人学习论文大部分出自这些地方。中国在应用层面追得很快（银河通用的 GraspVLA、宇树的步态控制 RL），但在基础方法论上仍然更多是 fast follower 而不是 first mover。
 
@@ -73,6 +88,11 @@
 如果你想**加入一家公司**：看它的资金来源结构。纯靠政府基金的公司，一旦政策风向变化，资金链可能突然收紧。有商业客户收入的公司，抗风险能力强得多。不管在哪边，问清楚公司的 runway 和商业化时间表 - 机器人公司烧钱速度比软件公司快得多。
 
 ---
+
+<figure>
+  <img src="/images/ch25/atlas_robot.jpg" alt="Boston Dynamics Atlas 人形机器人" />
+  <figcaption>Boston Dynamics Atlas 人形机器人 — 美国在机器人基础研究和算法创新上仍处于全球领先地位，Atlas 是人形机器人领域的标杆之作。图源：DARPA / Wikimedia Commons, Public Domain</figcaption>
+</figure>
 
 ### 一个 builder 的决策框架
 

@@ -40,6 +40,11 @@ else:
 
 行为树的核心优势就三个字：**模块化**。
 
+<figure>
+  <img src="/images/ch13/groot2_editor.png" alt="Groot2 行为树可视化编辑器" />
+  <figcaption>Groot2 行为树编辑器 — 可视化地拖拽组装行为节点，比手写 XML 直观得多。Nav2 的导航行为树就是用它来设计和调试的。图源：BehaviorTree.CPP</figcaption>
+</figure>
+
 你可以像拼乐高一样组装行为。“导航到目标点”是一块积木，“抓取物体”是另一块积木，“检查电量”又是一块。它们可以独立开发、独立测试、自由组合。要加一个新行为？插一个新节点，不用碰现有逻辑。要删一个行为？拔掉那个节点，其他部分不受影响。
 
 而且行为树天然支持层次化 - 一棵大树可以包含子树，子树可以被多棵大树复用。“导航到某点”这个子树写一次，在“拣货”任务里用、在“巡逻”任务里用、在“回充电桩”任务里用。
@@ -139,6 +144,11 @@ else:
 **抓取有多层 fallback。** 直接抓取失败两次后，不是直接放弃，而是 fallback 到一个“换角度重试”的 sequence - 移动到另一个观察位置，重新检测，再尝试抓取。真实场景中抓取失败的常见原因就是观察角度不好导致位姿估计不准。
 
 这就是行为树的威力：happy path（一切顺利时的路径）和异常处理逻辑在同一棵树里被清晰地表达，而且每个分支都可以独立调整。
+
+<figure>
+  <img src="/images/ch13/bt_replanning_recovery.png" alt="Nav2 中行为树的 replanning 和 recovery 流程" />
+  <figcaption>Nav2 中的行为树 — 展示了导航任务中 replanning 和 recovery 行为的分支结构，每个异常情况都有对应的处理路径。图源：Nav2 Documentation</figcaption>
+</figure>
 
 ---
 

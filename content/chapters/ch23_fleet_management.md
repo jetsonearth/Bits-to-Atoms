@@ -6,6 +6,11 @@
 
 这一章我们聊的就是：当你的机器人从一台变成一个车队时，软件架构要怎么变。
 
+<figure>
+  <img src="/images/ch23/agv_audi_factory.jpg" alt="奥迪工厂中的自动导引车" />
+  <figcaption>奥迪 R8 生产线上的 AGV — 自动导引车承载车身在工位之间移动，这是多机器人调度的典型工业场景。图源：Wikimedia Commons / Baer Automation, CC0</figcaption>
+</figure>
+
 ### 一台到多台：哪些问题冒出来了
 
 单机器人的世界其实挺“自我中心”的。它的 Nav2 只需要规划自己的路径，它的 costmap 只标记静态障碍物和偶尔出现的动态障碍物。但多机器人场景下，至少冒出三类新问题：
@@ -19,6 +24,11 @@
 ### Open-RMF：多机器人的“交通管制中心”
 
 这个领域最主要的开源框架是 **Open-RMF**（Open Robotics Middleware Framework）。它由 Open Robotics（就是做 ROS 的那帮人）发起，现在归 OSRA（Open Source Robotics Alliance）管理。你可以把 Open-RMF 理解成机器人车队的“空中交通管制系统” - 它不控制每架飞机怎么飞，但它告诉每架飞机什么时候可以进入什么空域。
+
+<figure>
+  <img src="/images/ch23/open_rmf_bidding.png" alt="Open-RMF 任务分配架构图" />
+  <figcaption>Open-RMF 的任务竞标架构 — Task Dispatcher 发布任务，多个 Fleet Adapter 参与竞标，最终分配给最合适的机器人车队。图源：Open-RMF / GitHub, Apache 2.0</figcaption>
+</figure>
 
 Open-RMF 的架构核心是几个概念：
 
@@ -56,6 +66,11 @@ Open-RMF 的架构核心是几个概念：
 
 来看一个具体场景。一个中型仓库，20 台 AGV 在里面跑，每天处理几千个搬运任务。这个系统实际是怎么运转的？
 
+<figure>
+  <img src="/images/ch23/agv_port_rotterdam.jpg" alt="鹿特丹港的自动导引车" />
+  <figcaption>鹿特丹港的集装箱搬运 AGV — 在大规模物流场景中，几十台 AGV 需要精确的交通调度才能避免冲突和死锁。图源：Wikimedia Commons, CC0</figcaption>
+</figure>
+
 **地图和区域划分。** 首先，整个仓库的地图会被划分成若干个 zone，每个 zone 有容量限制 - 比如一条窄通道同一时间只允许一台 AGV 通过。这些约束是预先配置好的，不是实时计算的。Traffic schedule 在分配路径时会尊重这些约束。
 
 **交通规则。** 和真实道路一样，仓库里的 AGV 也有“交通规则” - 单行道（某些通道只能单向通行）、优先级路口（高优先级任务的 AGV 优先通过）、等待区（通道繁忙时在指定区域排队）。这些规则大幅简化了冲突检测的计算复杂度 - 不用每对 AGV 都做时空冲突检测，只需要管理关键瓶颈点。
@@ -84,6 +99,11 @@ Open-RMF 的架构核心是几个概念：
 **异构车队的协调。** 实际仓库里可能同时跑着做搬运的 AGV、做盘点的无人机、做清洁的扫地机器人。它们的速度、体型、行为模式完全不同。让一个 traffic schedule 同时管理这些差异巨大的机器人是非常有挑战的。Open-RMF 的 fleet adapter 设计就是为了应对这个问题，但写一个好的 adapter 需要对那种机器人的行为特性非常了解 - 比如 AGV 可以精确停在指定位置，但清洁机器人走的是覆盖路径，你不能让它“在 B3 等待区停车”。
 
 **电量管理。** 20 台 AGV 共享 5 个充电桩，什么时候让谁去充电？太早去浪费运力，太晚去可能半路没电趴窝（趴在通道上的没电 AGV 是最糟糕的路障）。充电调度要和任务调度联动 - 预测未来 30 分钟的任务量，提前安排低电量车辆去充电。
+
+<figure>
+  <img src="/images/ch23/open_rmf_airport_demo.png" alt="Open-RMF 机场航站楼仿真" />
+  <figcaption>Open-RMF 的机场航站楼仿真场景 — 上方为导航图的路径网络，下方为 3D 仿真环境，多台机器人在其中按调度指令运行。图源：Open-RMF / GitHub, Apache 2.0</figcaption>
+</figure>
 
 ### 除了 Open-RMF 还有什么
 

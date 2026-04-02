@@ -46,6 +46,11 @@
 
 这就是运动规划（Motion Planning）要做的事。
 
+<figure>
+  <img src="/images/ch11/moveit_rviz_planned_path.png" alt="MoveIt 2 在 RViz 中的运动轨迹规划可视化" />
+  <figcaption>MoveIt 2 在 RViz 中规划的手臂运动轨迹 — 绿色路径是从当前姿态到目标姿态的无碰撞路径，橙色是手臂当前状态。图源：MoveIt Documentation</figcaption>
+</figure>
+
 ### 配置空间（C-Space）
 
 理解运动规划的关键概念是 **配置空间（Configuration Space, C-Space）**。
@@ -59,6 +64,11 @@
 ### OMPL 和它的算法家族
 
 MoveIt 2 的默认运动规划后端是 **OMPL（Open Motion Planning Library）** - 一个开源的运动规划算法库，里面实现了几十种采样式规划算法。
+
+<figure>
+  <img src="/images/ch11/rrt_algorithm.gif" alt="RRT 算法在二维空间中随机采样探索路径的动画" />
+  <figcaption>RRT 算法的工作原理 — 从起点随机向空间中采样，逐步构建一棵探索树，直到连接到目标点。MoveIt 2 在 6 维关节空间中做同样的事。图源：Wikimedia Commons</figcaption>
+</figure>
 
 先给一个实用建议：**绝大多数场景用 RRT-Connect 就够了。** 它是 MoveIt 2 的默认规划器，从起点和终点同时长两棵随机树，中间碰头就找到路径了。速度快，开箱即用，不需要你理解太多理论。如果你刚开始接触 MoveIt 2，不用纠结算法选择 - 用默认的就行。
 
@@ -77,6 +87,11 @@ MoveIt 2 的默认运动规划后端是 **OMPL（Open Motion Planning Library）
 运动规划里每撒一个采样点、每延伸一步，都要回答一个问题：这个姿态会碰撞吗？一次规划可能采样几千上万个点，每个点都要做碰撞检测。所以碰撞检测的速度直接决定了规划的速度。
 
 碰撞检测配错了是什么后果？一个真实场景：你的机械臂在桌上抓取物体，Planning Scene 里忘了添加桌面的碰撞模型。规划器找到一条”完美”的路径 - 穿过桌面。在仿真里看起来手臂像幽灵一样穿桌而过，在真实硬件上就是手臂全速撞向桌面。反过来，如果碰撞模型过度膨胀 - 比如把桌面建成了一个比实际大 10 厘米的盒子 - 规划器会认为桌面附近全是禁区，怎么都找不到抓取路径，反复报 PLANNING_FAILED。碰撞检测的核心挑战就是在”漏检导致撞击”和”误检导致无路可走”之间找平衡。
+
+<figure>
+  <img src="/images/ch11/moveit_collision_detection.png" alt="MoveIt 2 中的 Planning Scene 和碰撞检测可视化" />
+  <figcaption>MoveIt 2 的 Planning Scene — 绿色是手臂模型，彩色方块是环境中的碰撞物体。规划器必须找到一条绕过所有障碍物的路径。图源：MoveIt Documentation</figcaption>
+</figure>
 
 碰撞分两类，处理方式不同：
 

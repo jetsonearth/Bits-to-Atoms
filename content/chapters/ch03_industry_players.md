@@ -18,7 +18,17 @@
 
 目前对开发者最友好的是 **宇树（Unitree）**。Go2 机器狗一万多人民币（EDU 版），是很多人的第一台真机。SDK 开源，Python/C++ 接口，支持关节级控制，有 ROS 2 包装和 Isaac Gym 的 RL 训练环境。如果你就是想”买一台回来写代码”，它是目前性价比最高的入口。
 
+<figure>
+  <img src=”/images/ch03/unitree_go2.jpg” alt=”宇树 Go2 机器狗在雪地中行走” />
+  <figcaption>宇树 Go2 四足机器人 — 罗马尼亚山地救援队（Salvamont）部署的 Go2，用于高海拔环境巡逻。图源：Wikimedia Commons / HotNews Romania, CC BY 3.0</figcaption>
+</figure>
+
 另一个极端是 **Boston Dynamics**。Spot 的 SDK 是行业标杆 - 文档最好、功能最完整（自主导航、机械臂操控、在机器人上跑自定义 ML 模型）。问题是七八万美元起步。你可能买不起，但如果有机会用一台 Spot，它会帮你建立”好的开发者体验应该长什么样”的标准。
+
+<figure>
+  <img src=”/images/ch03/boston_dynamics_spot.jpg” alt=”Boston Dynamics Spot 机器人在户外林间小路上” />
+  <figcaption>Boston Dynamics Spot — 自主导航、机械臂操控、可部署自定义 ML 模型，SDK 是行业标杆。图源：Wikimedia Commons / Jonte, CC BY-SA 4.0</figcaption>
+</figure>
 
 中间地带有 **Fourier（傅利叶）** 的 GR 系列人形（ROS 2 + Jetson，执行器有积累）、**银河通用（Galbot）** 专注商业场景落地。**Figure AI** 和 **1X Technologies** 融资规模大、技术路线前沿，但目前开发者能直接用的硬件和 SDK 很有限 - 更多在内部研发阶段。**优必选（UBTECH）** 偏企业交付，不太适合”买一台回来自己玩”。
 
@@ -74,6 +84,11 @@
 **Open Robotics** 是 ROS 和 Gazebo 的创建者，2022 年被 Google 旗下的 Intrinsic 收购。为了确保 ROS 的社区治理不因收购而受影响，**OSRA（Open Source Robotics Alliance）** 在 Linux Foundation 下成立，负责 ROS 2 的长期维护和演进。ROS 2 的最新 LTS 版本是 Jazzy Jalisco（2024 年 5 月发布）。
 
 **ROS-Industrial** 是一个联盟，专注于把 ROS 应用到工业制造场景。提供了一系列工业机器人（UR、FANUC、ABB、KUKA）的 ROS 2 驱动包。如果你的项目涉及工业机械臂，这是第一个要看的地方。
+
+<figure>
+  <img src="/images/ch03/fanuc_welding_robots.jpg" alt="两台 FANUC 6 轴焊接机器人在工厂中作业" />
+  <figcaption>FANUC ARC Mate 120iC 焊接机器人 — 工业机械臂的典型代表，ROS-Industrial 提供了 FANUC 等主流品牌的 ROS 2 驱动包。图源：Wikimedia Commons, CC BY 3.0</figcaption>
+</figure>
 
 **LeRobot（Hugging Face）** 是最近两年冒出来的明星项目。它想做“机器人学习领域的 Hugging Face Transformers” - 统一的数据集格式、预训练策略模型（ACT、Diffusion Policy 等）、标准化的训练流水线。更重要的是它支持低成本硬件（几百块的桌面机械臂），让个人开发者也能玩真机器人学习。宇树也发布了 unitree_lerobot 做官方集成。如果你的方向是模仿学习或 RL，LeRobot 是目前最活跃的开源入口。
 

@@ -12,6 +12,11 @@
 
 你写了一行 `move_joint(angle=30, velocity=1.0)` - 电机类型决定了这行代码执行时的真实物理行为：它能转多快？能输出多大力？被外力推动时你能不能感知到？
 
+<figure>
+  <img src="/images/ch05/bldc_motor_stator.jpg" alt="无刷直流电机定子绕组特写" />
+  <figcaption>无刷直流电机（BLDC）定子绕组 — 铜线圈缠绕在定子铁芯上，通过电子换向驱动转子旋转。机器人关节中的伺服电机大多基于 BLDC 原理。图源：Wikimedia Commons / Sergej Medvedev, CC BY-SA 3.0</figcaption>
+</figure>
+
 **伺服电机（Servo Motor）** 是机器人关节的主力。它自带编码器（encoder），形成闭环控制 - 你说转 30 度，它转到 30 度后会自己保持住。对开发者来说，这意味着你发位置指令就行，电机自己搞定”怎么到达”的问题。大部分工业机械臂（UR、FANUC）和人形机器人（宇树 G1、Fourier GR-1）都用伺服电机。你打交道最多的就是这种。
 
 **步进电机（Stepper Motor）** 每收到一个脉冲信号转一小步（比如 1.8 度），没有反馈回路。好处是控制逻辑简单 - 发 100 个脉冲就转 180 度，跟数数一样。坑在于：高速时电机可能跟不上脉冲频率，**丢步**了你不知道 - 你以为转了 180 度，实际上只到了 170 度，而且没有编码器告诉你出错了。3D 打印机和 CNC 用步进电机，机器人关节很少用。
@@ -27,6 +32,11 @@
 这 1.7 毫米来自减速器的**回差（backlash）** - 齿轮之间总有微小间隙，关节正转和反转时会”空走”一小段。一个关节 0.1 度的回差，经过 1 米长的臂展放大，末端就偏了 1.7 毫米。你的算法再精确也吃不掉这个物理误差。对于精密装配来说，这可能就是”插得进去”和”插不进去”的区别。
 
 回差的大小取决于减速器类型。大部分电机的原始输出是”转速高、扭矩小”，减速器把转速换成力矩 - 像自行车的低速档，慢但有劲。
+
+<figure>
+  <img src="/images/ch05/harmonic_drive_cross_section.svg" alt="谐波减速器横截面结构图" />
+  <figcaption>谐波减速器（Harmonic Drive）横截面 — 由波发生器（Wave Generator）、柔轮（Flexspline）和刚轮（Circular Spline）三个核心部件组成，结构紧凑、回差极小。图源：Wikimedia Commons, CC BY 3.0</figcaption>
+</figure>
 
 **谐波减速器（Harmonic Drive）** 是机器人关节的主流选择。减速比大（通常 50:1 到 160:1），回差极小，结构紧凑。缺点是贵、寿命有限（柔轮会疲劳磨损）。几乎所有工业机械臂和人形机器人手臂都在用。日本的 Harmonic Drive Systems 长期垄断高端市场，国内的绿的谐波在追赶。
 
@@ -63,6 +73,11 @@ DoF 越多越灵活，但控制复杂度也急剧上升。一个 7 DoF 手臂的
 **食品、农产品** → 考虑**软体夹爪（Soft Gripper）**。柔性材料自适应物体形状，不会捏坏水果。代价是控制精度有限，夹持力不大。
 
 **拧瓶盖、翻书页、打结** → 理论上需要**灵巧手（Dexterous Hand）**。LEAP Hand、Shadow Hand、Ability Hand 是比较知名的，一只手可能有 16-20 个 DoF。控制难度是平行夹爪的一百倍，目前大部分还在研究阶段。
+
+<figure>
+  <img src="/images/ch05/shadow_dexterous_hand.jpg" alt="Shadow Dexterous Hand 灵巧手抓持灯泡" />
+  <figcaption>Shadow Dexterous Hand — 拥有 20 个自由度的仿人灵巧手，能完成抓持灯泡等精细操作。控制难度远超平行夹爪，目前主要用于研究场景。图源：Wikimedia Commons / Shadow Robot Company, CC BY-SA 3.0</figcaption>
+</figure>
 
 很多团队的务实做法是装一个快换接口（tool changer），根据任务切换不同的末端执行器 - 不追求一只手解决所有问题。
 
