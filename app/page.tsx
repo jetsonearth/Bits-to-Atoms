@@ -128,12 +128,22 @@ export default async function Home() {
       {/* Footer */}
       <footer className="border-t border-[var(--border-secondary)]">
         <div className="max-w-4xl mx-auto px-6 py-8 flex items-center justify-between">
-          <p className="text-xs text-[var(--text-tertiary)]">
+          <a
+            href="https://x.com/jetsonearth"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          >
             By Jetson
-          </p>
-          <p className="text-xs text-[var(--text-tertiary)]">
+          </a>
+          <a
+            href="https://dimensionalos.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          >
             Dimensional
-          </p>
+          </a>
         </div>
       </footer>
     </div>
